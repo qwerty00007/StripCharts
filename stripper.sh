@@ -10,7 +10,7 @@ rm -rf incubator
 mkdir stable
 mkdir incubator
 
-curl -L -o main.zip http://192.168.100.230:10037/hedegang/catalog/archive/main.zip
+curl -L -o main.zip $CATALOG_REPO
 
 unzip main.zip
 rm -f main.zip
