@@ -40,10 +40,10 @@ done
 
 cd ..
 rm -rf catalog
-
+rm -f catalog.json
 git add .
-git config --global user.email "1165505953@qq.com"
-git config --global user.name "hedegang"
+git config --global user.email $USER_EMAIL
+git config --global user.name $USER_NAME
 git commit -a --amend -m "update" || git commit -a -m "update"
 git push -f
 
