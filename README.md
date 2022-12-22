@@ -7,6 +7,8 @@ This is a simple dockerized cron script that grabs just the specifed apps from t
 * `STRIP_INCUBATOR` to specify the *incubator* apps to grab, e.g. `actualserver|breitbandmessung-de`
 * `STRIP_REPO` to specify your git repo URL where to push the stripped down catalog. I recommend github because you can host a repo for free and you can include the auth token to authorize the push, e.g. `https://ghp_17613457614573562476235476@github.com/tuky/my-stripped-charts.git`
 * `CATALOG_REPO` to specify your repo URL where to download the truecharts catalog.
+* `USER_EMAIL` configure git user email.
+* `USER_NAME` configure git user name.
 
 The script will always amend and force push on the last commit (or create a new commit, if repo still empty) to prevent the repo from getting larger in file size.
 
