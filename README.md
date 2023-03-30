@@ -1,4 +1,7 @@
 # StripCharts
+
+This is a fork of [StripCharts by tuky](https://github.com/tuky/StripCharts)
+
 Strip down the awesome but slow to update TrueCharts catalog to what really matters to you
 
 This is a simple dockerized cron script that grabs just the specifed apps from the TrueCharts catalog and pushes them into your own github catalog. You have to provide these environment variables:
