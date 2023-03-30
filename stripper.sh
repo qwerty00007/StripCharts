@@ -93,9 +93,9 @@ rm -rf catalog-main
 cd stripcharts
 
 git add .
-git config --global user.email "${GITHUB_USERNAME:=strip@charts.com}"
-git config --global user.name "${GITHUB_USERNAME:=StripCharts}"
-git commit -a --amend -m "update" || git commit -a -m "update"
+git config --global user.email "${GITHUB_EMAIL:=strip@charts.com}"
+git config --global user.name "${GITHUB_NAME:=StripCharts}"
+git commit -a -m "update"
 git push -f
 
 cd ../../
