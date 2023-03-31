@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 rm -rf /tmp/stripcharts
 git clone $STRIP_REPO /tmp/stripcharts
@@ -27,24 +27,28 @@ rm -rf .github
 
 if [ -n "$STRIP_STABLE" ]; then
   cd stable
+  echo $STRIP_STABLE
   ls -1 . | grep -E "^($STRIP_STABLE)\$" | xargs cp -r -t ../../stripcharts/stable
   cd ..
 fi
 
 if [ -n "$STRIP_INCUBATOR" ]; then
   cd incubator
+  echo $STRIP_INCUBATOR
   ls -1 . | grep -E "^($STRIP_INCUBATOR)\$" | xargs cp -r -t ../../stripcharts/incubator/
   cd ..
 fi
 
 if [ -n "$STRIP_DEPENDENCY" ]; then
   cd dependency
+  echo $STRIP_DEPENDENCY
   ls -1 . | grep -E "^($STRIP_DEPENDENCY)\$" | xargs cp -r -t ../../stripcharts/dependency/
   cd ..
 fi
 
 if [ -n "$STRIP_ENTERPRISE" ]; then
   cd enterprise
+  echo $STRIP_ENTERPRISE
   ls -1 . | grep -E "^($STRIP_ENTERPRISE)\$" | xargs cp -r -t ../../stripcharts/enterprise/
   cd ..
 fi
@@ -52,6 +56,7 @@ fi
 cp catalog.json ../stripcharts/catalog.json
 
 cd ../stripcharts
+ls -al .
 
 STABLE_APPS=(`echo $STRIP_STABLE | tr '|' ' '`)
 STABLE_MAPPING=""
