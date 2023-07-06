@@ -1,0 +1,1 @@
+* 0 * * * root sh /strip/stripper.sh >> /var/log/cron.log
