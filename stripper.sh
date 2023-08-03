@@ -36,16 +36,21 @@ cleanup_strip_charts() {
   rm -rf dependency
   rm -rf stable
   rm -rf incubator
+  rm -rf operators
   mkdir stable
   mkdir incubator
   mkdir dependency
   mkdir enterprise
+  mkdir operators
 
   cd $TEMP_FOLDER
 }
 
 copy_charts() {
-  if [ -n "$2" ]; then
+  echo "Copying charts for $1: $2"
+  if [ "$2" == "all" ]; then
+    cp -r $TEMP_CATALOG_FOLDER/$1/* $TEMP_CHARTS_FOLDER/$1
+  elif [ -n "$2" ]; then
     cd $TEMP_CATALOG_FOLDER/$1
     echo "Copying charts for $1: $2"
     ls -1 . | grep -E "^($2)\$" | xargs cp -r -t $TEMP_CHARTS_FOLDER/$1
@@ -75,10 +80,9 @@ copy_catalog_file() {
 
   local STABLE_MAPPING=$(parse_mapping stable $STRIP_STABLE )
   local INCUBATOR_MAPPING=$(parse_mapping incubator $STRIP_INCUBATOR )
-  local DEPENDENCY_MAPPING=$(parse_mapping dependency $STRIP_DEPENDENCY )
   local ENTERPRISE_MAPPING=$(parse_mapping enterprise $STRIP_ENTERPRISE )
 
-  jq "{charts, test, stable: { $STABLE_MAPPING },  incubator: { $INCUBATOR_MAPPING }, dependency: { $DEPENDENCY_MAPPING }, enterprise: { $ENTERPRISE_MAPPING }}" catalog.json > catalog.json.tmp
+  jq "{charts, test, operators, dependency, stable: { $STABLE_MAPPING },  incubator: { $INCUBATOR_MAPPING }, enterprise: { $ENTERPRISE_MAPPING }}" catalog.json > catalog.json.tmp
   mv catalog.json.tmp catalog.json
 }
 
@@ -95,7 +99,8 @@ initial_setup
 cleanup_strip_charts
 copy_charts stable $STRIP_STABLE
 copy_charts incubator $STRIP_INCUBATOR
-copy_charts dependency $STRIP_DEPENDENCY
+copy_charts dependency all
 copy_charts enterprise $STRIP_ENTERPRISE
+copy_charts operators all
 copy_catalog_file
 commit_changes
