@@ -13,7 +13,7 @@ initial_setup() {
     git reset --hard origin/main
     git pull
   else
-    git clone $STRIP_REPO $TEMP_CHARTS_FOLDER
+    git clone $STRIP_REPO $TEMP_CHARTS_FOLDER --depth 1
   fi
 
   if [ -d "$TEMP_CATALOG_FOLDER" ]; then
@@ -23,7 +23,7 @@ initial_setup() {
     git reset --hard origin/main
     git pull
   else
-    git clone -b main --single-branch https://github.com/truecharts/catalog $TEMP_CATALOG_FOLDER
+    git clone -b main --single-branch https://github.com/truecharts/catalog $TEMP_CATALOG_FOLDER --depth 1
   fi
 
   cd $TEMP_FOLDER
