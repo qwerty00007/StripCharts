@@ -1,1 +1,1 @@
-* 0 * * * root sh /strip/stripper.sh >> /var/log/cron.log
+* 0 * * * root bash /strip/stripper.sh >> /var/log/cron.log
