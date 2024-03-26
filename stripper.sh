@@ -1,5 +1,6 @@
 #!/bin/bash
-
+mkdir /tmp/stripcharts
+mkdir /tmp/catalog
 TEMP_FOLDER="/tmp"
 TEMP_CHARTS_FOLDER="$TEMP_FOLDER/stripcharts"
 TEMP_CATALOG_FOLDER="$TEMP_FOLDER/catalog"
