@@ -23,7 +23,7 @@ initial_setup() {
     git reset --hard origin/main
     git pull
   else
-    git clone -b main --single-branch https://github.com/truecharts/catalog $TEMP_CATALOG_FOLDER --depth 1
+    git clone -b main --single-branch $CATALOG_REPO $TEMP_CATALOG_FOLDER --depth 1
   fi
 
   cd $TEMP_FOLDER
@@ -35,13 +35,17 @@ cleanup_strip_charts() {
   rm -rf enterprise
   rm -rf dependency
   rm -rf stable
-  rm -rf incubator
   rm -rf operators
+  rm -rf premium
+  rm -rf system
+  
   mkdir stable
-  mkdir incubator
+  mkdir premium
   mkdir dependency
   mkdir enterprise
   mkdir operators
+  mkdir system
+  
 
   cd $TEMP_FOLDER
 }
@@ -79,10 +83,17 @@ copy_catalog_file() {
   ls -al .
 
   local STABLE_MAPPING=$(parse_mapping stable $STRIP_STABLE )
-  local INCUBATOR_MAPPING=$(parse_mapping incubator $STRIP_INCUBATOR )
+  
+  local PREMIUM_MAPPING=$(parse_mapping premium $STRIP_PREMIUM )
+  
   local ENTERPRISE_MAPPING=$(parse_mapping enterprise $STRIP_ENTERPRISE )
+  
+  local DEPENDENCY_MAPPING=$(parse_mapping dependency $STRIP_DEPENDENCY )
+  local OPERATORS_MAPPING=$(parse_mapping operators $STRIP_OPERATORS )
+  
+  local SYSTEM_MAPPING=$(parse_mapping system $STRIP_SYSTEM )
 
-  jq "{charts, test, operators, dependency, stable: { $STABLE_MAPPING },  incubator: { $INCUBATOR_MAPPING }, enterprise: { $ENTERPRISE_MAPPING }}" catalog.json > catalog.json.tmp
+  jq "{charts, test, operators: { $OPERATORS_MAPPING}, dependency: { $DEPENDENCY_MAPPING }, stable: { $STABLE_MAPPING },  premium: { $PREMIUM_MAPPING }, enterprise: { $ENTERPRISE_MAPPING }, system: { $SYSTEM_MAPPING }}" catalog.json > catalog.json.tmp
   mv catalog.json.tmp catalog.json
 }
 
@@ -98,9 +109,10 @@ commit_changes() {
 initial_setup
 cleanup_strip_charts
 copy_charts stable $STRIP_STABLE
-copy_charts incubator $STRIP_INCUBATOR
-copy_charts dependency all
+copy_charts premium $STRIP_PREMIUM
+copy_charts dependency $STRIP_DEPENDENCY
 copy_charts enterprise $STRIP_ENTERPRISE
-copy_charts operators all
+copy_charts operators $STRIP_OPERATORS
+copy_charts system $STRIP_SYSTEM
 copy_catalog_file
 commit_changes
