@@ -1,6 +1,6 @@
-FROM debian:12 as app
+FROM alpine:3 as app
 
-RUN apt update && apt install curl git unzip jq bash cron -y
+RUN apk add --no-cache curl git unzip jq bash cron
 
 RUN touch /var/log/cron.log
 
