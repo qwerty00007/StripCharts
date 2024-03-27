@@ -1,11 +1,8 @@
 FROM alpine:3 as app
 
-RUN apk add --no-cache curl git unzip jq bash cron
-
-RUN touch /var/log/cron.log
+RUN apk add --no-cache curl git unzip jq
 
 COPY --chmod=0755 ./stripper.sh /strip/stripper.sh
-COPY crontab /etc/cron.d/cjob
-RUN chmod 0644 /etc/cron.d/cjob
+COPY --chmod=0755 ./stripper.sh /etc/periodic/daily/strip
 
-CMD ["bash", "-c", "/strip/stripper.sh && cron -f"]
+CMD ["sh", "-c", "/strip/stripper.sh && crond -f -l 2"]
