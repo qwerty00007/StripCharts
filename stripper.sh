@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 TEMP_FOLDER="/tmp"
 TEMP_CHARTS_FOLDER="$TEMP_FOLDER/stripcharts"
