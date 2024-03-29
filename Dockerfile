@@ -1,8 +1,9 @@
 FROM alpine:3 as app
 ENV TZ="Asia/Shanghai"
+
 RUN apk add --no-cache curl git jq tzdata \
 && cp /usr/share/zoneinfo/"${TZ}" /etc/localtime \
-&& echo "${PGID}" >  /etc/timezone \
+&& echo "${TZ}" >  /etc/timezone \
 && apk del tzdata
 
 RUN 
