@@ -1,6 +1,6 @@
 FROM alpine:3 as app
 
-RUN apk add --no-cache curl git unzip jq
+RUN apk add --no-cache curl git jq
 
 COPY --chmod=0755 ./stripper.sh /strip/stripper.sh
 COPY --chmod=0755 ./stripper.sh /etc/periodic/daily/strip
