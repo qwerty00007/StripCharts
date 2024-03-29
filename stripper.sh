@@ -40,7 +40,6 @@ cleanup_strip_charts() {
   mkdir premium
   mkdir system
   
-
   cd $TEMP_FOLDER
 }
 
