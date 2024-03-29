@@ -32,18 +32,12 @@ initial_setup() {
 
 cleanup_strip_charts() {
   cd $TEMP_CHARTS_FOLDER
-  rm -rf enterprise
-  rm -rf dependency
   rm -rf stable
-  rm -rf operators
   rm -rf premium
   rm -rf system
   
   mkdir stable
   mkdir premium
-  mkdir dependency
-  mkdir enterprise
-  mkdir operators
   mkdir system
   
 
@@ -86,22 +80,17 @@ copy_catalog_file() {
   
   local PREMIUM_MAPPING=$(parse_mapping premium $STRIP_PREMIUM )
   
-  local ENTERPRISE_MAPPING=$(parse_mapping enterprise $STRIP_ENTERPRISE )
-  
-  local DEPENDENCY_MAPPING=$(parse_mapping dependency $STRIP_DEPENDENCY )
-  local OPERATORS_MAPPING=$(parse_mapping operators $STRIP_OPERATORS )
-  
   local SYSTEM_MAPPING=$(parse_mapping system $STRIP_SYSTEM )
 
-  jq "{charts, test, operators: { $OPERATORS_MAPPING}, dependency: { $DEPENDENCY_MAPPING }, stable: { $STABLE_MAPPING },  premium: { $PREMIUM_MAPPING }, enterprise: { $ENTERPRISE_MAPPING }, system: { $SYSTEM_MAPPING }}" catalog.json > catalog.json.tmp
+  jq "{charts, test, stable: { $STABLE_MAPPING },  premium: { $PREMIUM_MAPPING }, system: { $SYSTEM_MAPPING }}" catalog.json > catalog.json.tmp
   mv catalog.json.tmp catalog.json
 }
 
 commit_changes() {
   cd $TEMP_CHARTS_FOLDER
   git add .
-  git config --global user.email "${GITHUB_EMAIL:=strip@charts.com}"
-  git config --global user.name "${GITHUB_NAME:=StripCharts}"
+  git config --global user.email $USER_EMAIL
+  git config --global user.name $USER_NAME
   git commit -a -m "update"
   git push -f
 }
@@ -110,9 +99,6 @@ initial_setup
 cleanup_strip_charts
 copy_charts stable $STRIP_STABLE
 copy_charts premium $STRIP_PREMIUM
-copy_charts dependency $STRIP_DEPENDENCY
-copy_charts enterprise $STRIP_ENTERPRISE
-copy_charts operators $STRIP_OPERATORS
 copy_charts system $STRIP_SYSTEM
 copy_catalog_file
 commit_changes
