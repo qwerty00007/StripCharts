@@ -2,9 +2,8 @@ FROM alpine:3 as app
 ENV TZ="Asia/Shanghai"
 
 RUN apk add --no-cache curl git jq tzdata \
-&& cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-&& echo "Asia/Shanghai" >  /etc/timezone \
-&& apk del tzdata
+&& rm -rf /etc/localtime && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 RUN 
 COPY --chmod=0755 ./stripper.sh /strip/stripper.sh
 COPY --chmod=0755 ./stripper.sh /etc/periodic/daily/strip
